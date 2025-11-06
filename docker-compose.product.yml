@@ -1,0 +1,40 @@
+
+networks:
+  order-product-network: {}
+
+services:
+  product-postgres:
+    image: postgres:17
+    container_name: product-postgres
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    # 내부 포트도 5434로 실행함.
+    command: [ "postgres", "-c", "port=${POSTGRES_PORT}" ]
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"   # 5434:5434
+    volumes:
+      - product_pgdata:/var/lib/postgresql/data
+    networks: [ order-product-network ]
+
+  product-service:
+    container_name: product-service
+    build: .
+    env_file:
+      - .env
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      # 필요 시 개별 주입도 가능:
+      # POSTGRES_URL: jdbc:postgresql://product-postgres:${POSTGRES_PORT}/${POSTGRES_DB}
+    depends_on:
+      - product-postgres
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    networks: [ order-product-network ]
+
+
+volumes:
+  product_pgdata: {}
