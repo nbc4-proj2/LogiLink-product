@@ -22,6 +22,7 @@ configurations {
 
 repositories {
 	mavenCentral()
+    mavenLocal()
 }
 
 ext {
@@ -44,6 +45,9 @@ dependencies {
 	// spring
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    //공통모듈 참조
+    implementation 'com.sparta:logilink-common:0.0.1-SNAPSHOT'
 }
 
 dependencyManagement {
