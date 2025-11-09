@@ -5,21 +5,29 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Getter
 @NoArgsConstructor
 public class ProductUpdateReq {
 
     @NotBlank(message = "상품명은 필수입니다.")
-    private String name;
+    private String productName;
 
     @NotBlank(message = "상품 설명은 필수입니다.")
-    private String description;
+    private String productDescription;
 
     @NotBlank(message = "가격은 필수입니다.")
     @Min(value = 0, message = "가격은 0원 이상이어야 합니다.")
-    private Long price;
+    private Long productPrice;
 
     @NotBlank(message = "상품 수량은 필수입니다.")
     @Min(value = 0, message = "재고 수량은 0개 이상이어야 합니다.")
-    private Long quantity;
+    private Long productQuantity;
+
+    @NotBlank(message = "허브는 필수입니다.")
+    private UUID hubId;
+
+    @NotBlank(message = "회사는 필수입니다.")
+    private UUID companyId;
 }

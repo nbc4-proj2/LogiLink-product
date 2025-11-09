@@ -13,10 +13,10 @@ import java.util.UUID;
 public class ProductRes {
 
     private UUID productId;
-    private String name;
-    private String description;
-    private Long price;
-    private Long quantity;
+    private String productName;
+    private String productDescription;
+    private Long productPrice;
+    private Long productQuantity;
     private ProductStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updateAt;
@@ -24,10 +24,10 @@ public class ProductRes {
     public static ProductRes from(Product product){
         return ProductRes.builder()
                 .productId(product.getProductId())
-                .name(product.getProductName())
-                .description(product.getProductDescription())
-                .price(product.getProductPrice())
-                .quantity(product.getProductQuantity())
+                .productName(product.getProductName())
+                .productDescription(product.getProductDescription())
+                .productPrice(product.getProductPrice())
+                .productQuantity(product.getProductQuantity())
                 .status(product.getStatus())
                 .createdAt(product.getCreatedAt())
                 .updateAt(product.getUpdatedAt())

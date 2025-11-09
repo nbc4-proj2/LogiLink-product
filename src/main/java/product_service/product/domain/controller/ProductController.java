@@ -24,24 +24,31 @@ public class ProductController {
     // 상품 생성 - MASTER, HUB, COMPANY
     @PostMapping
     public BaseResponse<ProductRes> createProduct(
-            @RequestBody @Valid ProductCreateReq requestDto, @RequestHeader Long userId){
-        ProductRes responseDto = productService.createProduct(requestDto, userId);
+            @RequestBody @Valid ProductCreateReq requestDto,
+            @RequestHeader(value="USER_ID") Long userId,
+            @RequestHeader(value="User_Role") String userRole){
+        ProductRes responseDto = productService.createProduct(requestDto, userId, userRole);
         return BaseResponse.success(responseDto);
     }
 
     // 상품 수정 - MASTER, HUB, COMPANY
     @PutMapping("/{productId}")
     public BaseResponse<ProductRes> updateProduct(
-            @PathVariable UUID productId, @RequestBody @Valid ProductUpdateReq requestDto, @RequestHeader Long userId){
-        ProductRes responseDto = productService.updateProduct(productId, requestDto, userId);
+            @PathVariable UUID productId,
+            @RequestBody @Valid ProductUpdateReq requestDto,
+            @RequestHeader(value="USER_ID") Long userId,
+            @RequestHeader(value="User_Role") String userRole){
+        ProductRes responseDto = productService.updateProduct(productId, requestDto, userId, userRole);
         return BaseResponse.success(responseDto);
     }
 
     // 상품 소프트 삭제 - MASTER, HUB
     @DeleteMapping("/{productId}")
     public BaseResponse<ProductRes> deleteProduct(
-            @PathVariable UUID productId, @RequestHeader Long userId){
-        productService.deleteProduct(productId, userId);
+            @PathVariable UUID productId,
+            @RequestHeader(value="USER_ID") Long userId,
+            @RequestHeader(value="User_Role") String userRole){
+        productService.deleteProduct(productId, userId, userRole);
         return BaseResponse.success(null);
     }
 
@@ -53,9 +60,9 @@ public class ProductController {
 
     // 상품 목록 조회 - ALL
     @GetMapping
-    public BaseResponse<Page<ProductRes>> getAllProducts(Pageable pageable){
+    public BaseResponse<Page<ProductRes>> getProductPage(Pageable pageable){
         Pageable p = PageableUtils.enforce(pageable);
-        Page<ProductRes> result = productService.getAllProducts(p);
+        Page<ProductRes> result = productService.getProductPage(p);
         return BaseResponse.success(result);
     }
 

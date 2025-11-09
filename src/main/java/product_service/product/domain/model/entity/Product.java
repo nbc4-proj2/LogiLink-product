@@ -88,7 +88,7 @@ public class Product extends BaseTimeEntity {
     }
 
     // 상품 비활성화
-    public void deactivate() {
+    public void delete() {
         this.status = ProductStatus.INACTIVE;
     }
 

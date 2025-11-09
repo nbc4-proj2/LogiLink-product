@@ -5,6 +5,8 @@ import product_service.product.domain.model.entity.Product;
 
 import java.util.UUID;
 
-public class ProductRepository extends JpaRepository<Product, UUID> {
+public interface ProductRepository extends JpaRepository<Product, UUID> {
 
+
+    boolean existsByName(String name);
 }
