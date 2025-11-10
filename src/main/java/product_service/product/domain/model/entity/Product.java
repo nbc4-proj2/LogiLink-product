@@ -1,20 +1,19 @@
 package product_service.product.domain.model.entity;
 
-import com.sparta.logilinkcommon.common.BaseTimeEntity;
-import com.sparta.logilinkcommon.common.constants.ProductStatus;
-import com.sparta.logilinkcommon.common.exception.AppException;
 import jakarta.persistence.*;
 import lombok.*;
-import product_service.product.common.ProductErrorCode;
+import lombok.experimental.SuperBuilder;
+import product_service.product.common.BaseTimeEntity;
+import product_service.product.common.exception.AppException;
+import product_service.product.common.exception.ProductErrorCode;
 
 import java.util.UUID;
 
 @Entity
 @Table(name="p_products")
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
+@NoArgsConstructor(force = true)
+@SuperBuilder
 public class Product extends BaseTimeEntity {
 
     @Id

@@ -46,8 +46,6 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    //공통모듈 참조
-    // implementation project(":LogiLink-common")
 }
 
 dependencyManagement {

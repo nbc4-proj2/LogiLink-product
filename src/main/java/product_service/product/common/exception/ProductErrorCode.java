@@ -1,6 +1,5 @@
-package product_service.product.common;
+package product_service.product.common.exception;
 
-import com.sparta.logilinkcommon.common.exception.ErrorCode;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 

@@ -1,9 +1,9 @@
 package product_service.product.domain.model.dto.response;
 
-import com.sparta.logilinkcommon.common.constants.ProductStatus;
 import lombok.Builder;
 import lombok.Getter;
 import product_service.product.domain.model.entity.Product;
+import product_service.product.domain.model.entity.ProductStatus;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

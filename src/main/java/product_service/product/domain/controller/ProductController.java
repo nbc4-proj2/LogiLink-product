@@ -1,11 +1,11 @@
 package product_service.product.domain.controller;
 
-import com.sparta.logilinkcommon.common.BaseResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import product_service.product.common.BaseResponse;
 import product_service.product.common.PageableUtils;
 import product_service.product.domain.model.dto.request.ProductCreateReq;
 import product_service.product.domain.model.dto.request.ProductUpdateReq;
@@ -25,8 +25,8 @@ public class ProductController {
     @PostMapping
     public BaseResponse<ProductRes> createProduct(
             @RequestBody @Valid ProductCreateReq requestDto,
-            @RequestHeader(value="USER_ID") Long userId,
-            @RequestHeader(value="User_Role") String userRole){
+            @RequestHeader(value = "USER_ID", required = false, defaultValue = "1") Long userId,
+            @RequestHeader(value = "User_ROLE", required = false, defaultValue = "COMPANY_MANAGER") String userRole){
         ProductRes responseDto = productService.createProduct(requestDto, userId, userRole);
         return BaseResponse.success(responseDto);
     }
@@ -36,8 +36,8 @@ public class ProductController {
     public BaseResponse<ProductRes> updateProduct(
             @PathVariable UUID productId,
             @RequestBody @Valid ProductUpdateReq requestDto,
-            @RequestHeader(value="USER_ID") Long userId,
-            @RequestHeader(value="User_Role") String userRole){
+            @RequestHeader(value="USER_ID", required = false, defaultValue = "1" ) Long userId,
+            @RequestHeader(value="User_Role", required = false, defaultValue = "COMPANY_MANAGER") String userRole){
         ProductRes responseDto = productService.updateProduct(productId, requestDto, userId, userRole);
         return BaseResponse.success(responseDto);
     }
@@ -46,8 +46,8 @@ public class ProductController {
     @DeleteMapping("/{productId}")
     public BaseResponse<ProductRes> deleteProduct(
             @PathVariable UUID productId,
-            @RequestHeader(value="USER_ID") Long userId,
-            @RequestHeader(value="User_Role") String userRole){
+            @RequestHeader(value="USER_ID", required = false, defaultValue = "1") Long userId,
+            @RequestHeader(value="User_Role", required = false, defaultValue = "COMPANY_MANAGER") String userRole){
         productService.deleteProduct(productId, userId, userRole);
         return BaseResponse.success(null);
     }
