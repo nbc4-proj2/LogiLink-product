@@ -10,11 +10,11 @@ import java.util.UUID;
 
 public interface ProductService {
 
-    ProductRes createProduct(ProductCreateReq requestDto, Long userId, String userRole, UUID userHubId, UUID userCompanyId);
+    ProductRes createProduct(ProductCreateReq requestDto, Long userId, String userRole, UUID hubId, UUID companyId);
 
-    ProductRes updateProduct(UUID productId, ProductUpdateReq requestDto, Long userId, String userRole, UUID userHubId, UUID userCompanyId);
+    ProductRes updateProduct(UUID productId, ProductUpdateReq requestDto, Long userId, String userRole, UUID hubId, UUID companyId);
 
-    void deleteProduct(UUID productId, Long userId, String userRole, UUID userHubId, UUID userCompanyId);
+    void deleteProduct(UUID productId, Long userId, String userRole, UUID hubId, UUID companyId);
 
     ProductRes getProduct(UUID productId);
 

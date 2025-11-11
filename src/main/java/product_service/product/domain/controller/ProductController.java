@@ -27,9 +27,9 @@ public class ProductController {
             @RequestBody @Valid ProductCreateReq requestDto,
             @RequestHeader(value = "X-User-Id", required = false, defaultValue = "1") Long userId,
             @RequestHeader(value = "X-User-Role", required = false, defaultValue = "COMPANY_MANAGER") String userRole,
-            @RequestHeader(value = "X-Hub_Id", required = false) UUID userHubId,
-            @RequestHeader(value = "X-Company-Id", required = false) UUID userCompanyId){
-        ProductRes responseDto = productService.createProduct(requestDto, userId, userRole, userHubId, userCompanyId);
+            @RequestHeader(value = "X-Hub_Id", required = false) UUID hubId,
+            @RequestHeader(value = "X-Company-Id", required = false) UUID companyId){
+        ProductRes responseDto = productService.createProduct(requestDto, userId, userRole, hubId, companyId);
         return BaseResponse.success(responseDto);
     }
 
@@ -40,9 +40,9 @@ public class ProductController {
             @RequestBody @Valid ProductUpdateReq requestDto,
             @RequestHeader(value="X-User-Id", required = false, defaultValue = "1" ) Long userId,
             @RequestHeader(value="X-User-Role", required = false, defaultValue = "COMPANY_MANAGER") String userRole,
-            @RequestHeader(value = "X-Hub_Id", required = false) UUID userHubId,
-            @RequestHeader(value = "X-Company-Id", required = false) UUID userCompanyId){
-        ProductRes responseDto = productService.updateProduct(productId, requestDto, userId, userRole, userHubId, userCompanyId);
+            @RequestHeader(value = "X-Hub_Id", required = false) UUID hubId,
+            @RequestHeader(value = "X-Company-Id", required = false) UUID companyId){
+        ProductRes responseDto = productService.updateProduct(productId, requestDto, userId, userRole, hubId, companyId);
         return BaseResponse.success(responseDto);
     }
 
@@ -52,9 +52,9 @@ public class ProductController {
             @PathVariable UUID productId,
             @RequestHeader(value="X-User-Id", required = false, defaultValue = "1") Long userId,
             @RequestHeader(value="X-User-Role", required = false, defaultValue = "COMPANY_MANAGER") String userRole,
-            @RequestHeader(value = "X-Hub_Id", required = false) UUID userHubId,
-            @RequestHeader(value = "X-Company-Id", required = false) UUID userCompanyId){
-        productService.deleteProduct(productId, userId, userRole, userHubId, userCompanyId);
+            @RequestHeader(value = "X-Hub_Id", required = false) UUID hubId,
+            @RequestHeader(value = "X-Company-Id", required = false) UUID companyId){
+        productService.deleteProduct(productId, userId, userRole, hubId, companyId);
         return BaseResponse.success(null);
     }
 
