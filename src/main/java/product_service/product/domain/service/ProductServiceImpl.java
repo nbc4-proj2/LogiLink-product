@@ -100,10 +100,10 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public Page<ProductRes> getProductPage(Pageable pageable){
 
-        return productRepository.findAll(pageable).map(ProductRes::from);
+        return productRepository.findAllByStatus(ProductStatus.ACTIVE, pageable).map(ProductRes::from);
     }
 
-    private void validateCreatePermission(ProductCreateReq requestDto, String userRole, UUID hubId, UUID companyId) {
+    private void validateCreatePermission(String userRole, UUID hubId, UUID companyId) {
 
         switch (userRole) {
             case "MASTER":
@@ -169,6 +169,20 @@ public class ProductServiceImpl implements ProductService {
             default:
                 throw new AppException(ProductErrorCode.PRODUCT_ACCESS_DENIED);
         }
+    }
+
+    //=====주문 서비스 연동한 재고 관리 로직=====//
+    //재고 감소(주문 발생 시)
+    @Override
+    public void decreaseStock(UUID productId, Long amount) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new AppException(ProductErrorCode.PRODUCT_NOT_FOUND));
+
+        if (!product.isActive()) {
+            throw new AppException(ProductErrorCode.PRODUCT_ACCESS_DENIED);
+        }
+
+        product.decreaseProductQuantity(amount);
     }
 
 }
