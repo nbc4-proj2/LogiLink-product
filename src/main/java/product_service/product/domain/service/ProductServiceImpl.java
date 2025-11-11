@@ -25,10 +25,10 @@ public class ProductServiceImpl implements ProductService {
     //=====상품 생성(MASTER, HUB, COMPANY)=====//
     @Override
     @Transactional
-    public ProductRes createProduct(ProductCreateReq requestDto, Long userId, String userRole, UUID HubId, UUID CompanyId){
+    public ProductRes createProduct(ProductCreateReq requestDto, Long userId, String userRole, UUID hubId, UUID companyId){
 
         // 상품 생성 권한 검증
-        //validateCreatePermission(requestDto, userId, userRole);
+        validateCreatePermission(userRole, hubId, companyId);
 
         // 상품 생성
         if(productRepository.existsByProductName(requestDto.getProductName())){
@@ -40,8 +40,8 @@ public class ProductServiceImpl implements ProductService {
                 .productPrice(requestDto.getProductPrice())
                 .productQuantity(requestDto.getProductQuantity())
                 .status(ProductStatus.ACTIVE)
-                .hubId(HubId)
-                .companyId(CompanyId)
+                .hubId(hubId)
+                .companyId(companyId)
                 .createdBy(userId)
                 .build();
         return ProductRes.from(productRepository.save(product));
@@ -50,12 +50,12 @@ public class ProductServiceImpl implements ProductService {
     //====상품 수정(MASTER, HUB, COMPANY)=====//
     @Override
     @Transactional
-    public ProductRes updateProduct(UUID productId, ProductUpdateReq requestDto, Long userId, String userRole, UUID HubId, UUID CompanyId){
+    public ProductRes updateProduct(UUID productId, ProductUpdateReq requestDto, Long userId, String userRole, UUID hubId, UUID companyId){
 
         Product product = productRepository.findById(productId).orElseThrow(() -> new AppException(ProductErrorCode.PRODUCT_NOT_FOUND));
 
         // 상품 수정 권한 검증
-        //validateUpdatePermission(productId, requestDto, userId, userRole);
+        validateUpdatePermission(product, userRole, hubId, companyId);
 
         // 상품 수정
         if(!product.getProductName().equals(requestDto.getProductName()) && productRepository.existsByProductName(requestDto.getProductName())){
@@ -74,12 +74,12 @@ public class ProductServiceImpl implements ProductService {
     //====상품 삭제(MASTER, HUB)=====//
     @Override
     @Transactional
-    public void deleteProduct(UUID productId, Long userId, String userRole, UUID HubId, UUID CompanyId){
+    public void deleteProduct(UUID productId, Long userId, String userRole, UUID hubId, UUID companyId){
 
         Product product = productRepository.findById(productId).orElseThrow(() -> new AppException(ProductErrorCode.PRODUCT_NOT_FOUND));
 
         // 상품 삭제 권한 검증
-        //validateDeletePermission(product, userRole, userId);
+        validateDeletePermission(product, userRole, hubId);
 
         product.delete();
     }
@@ -102,4 +102,73 @@ public class ProductServiceImpl implements ProductService {
 
         return productRepository.findAll(pageable).map(ProductRes::from);
     }
+
+    private void validateCreatePermission(ProductCreateReq requestDto, String userRole, UUID hubId, UUID companyId) {
+
+        switch (userRole) {
+            case "MASTER":
+                return;
+
+            case "HUB_MANAGER":
+                // 본인 허브에 대해서만 상품 생성 가능
+                if (hubId == null) {
+                    throw new AppException(ProductErrorCode.PRODUCT_ACCESS_DENIED);
+                }
+                return;
+
+            case "COMPANY_MANAGER":
+                // 본인 업체에 대해서만 상품 생성 가능
+                if (companyId == null) {
+                    throw new AppException(ProductErrorCode.PRODUCT_ACCESS_DENIED);
+                }
+                return;
+
+            default:
+                throw new AppException(ProductErrorCode.PRODUCT_ACCESS_DENIED);
+        }
+    }
+
+    private void validateUpdatePermission(Product product, String userRole, UUID hubId, UUID companyId) {
+
+        switch (userRole) {
+            case "MASTER":
+                return;
+
+            case "HUB_MANAGER":
+                // 본인 허브 상품만 수정 가능
+                if (hubId == null || !hubId.equals(product.getHubId())) {
+                    throw new AppException(ProductErrorCode.PRODUCT_ACCESS_DENIED);
+                }
+                return;
+
+            case "COMPANY_MANAGER":
+                // 본인 회사 상품만 수정 가능
+                if (companyId == null || !companyId.equals(product.getCompanyId())) {
+                    throw new AppException(ProductErrorCode.PRODUCT_ACCESS_DENIED);
+                }
+                return;
+
+            default:
+                throw new AppException(ProductErrorCode.PRODUCT_ACCESS_DENIED);
+        }
+    }
+
+    private void validateDeletePermission(Product product, String userRole, UUID hubId) {
+
+        switch (userRole) {
+            case "MASTER":
+                return;
+
+            case "HUB_MANAGER":
+                // 본인 허브 상품만 삭제 가능
+                if (hubId == null || !hubId.equals(product.getHubId())) {
+                    throw new AppException(ProductErrorCode.PRODUCT_ACCESS_DENIED);
+                }
+                return;
+
+            default:
+                throw new AppException(ProductErrorCode.PRODUCT_ACCESS_DENIED);
+        }
+    }
+
 }
