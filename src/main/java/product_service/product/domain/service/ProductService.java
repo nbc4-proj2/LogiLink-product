@@ -20,5 +20,5 @@ public interface ProductService {
 
     Page<ProductRes> getProductPage(Pageable pageable);
 
-
+    void decreaseStock(UUID productId, Long amount);
 }

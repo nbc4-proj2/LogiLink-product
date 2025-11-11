@@ -56,13 +56,13 @@ public class Product extends BaseTimeEntity {
         this.productQuantity = productQuantity;
     }
 
-    // 재고 증가
-    public void increaseProductQuantity(Long amount) {
-        if(amount < 0){
-            throw new AppException(ProductErrorCode.INVALID_QUANTITY_INCREASE);
-        }
-        this.productQuantity += amount;
-    }
+//    // 재고 증가
+//    public void increaseProductQuantity(Long amount) {
+//        if(amount < 0){
+//            throw new AppException(ProductErrorCode.INVALID_QUANTITY_INCREASE);
+//        }
+//        this.productQuantity += amount;
+//    }
 
     // 재고 감소
     public void decreaseProductQuantity(Long amount) {

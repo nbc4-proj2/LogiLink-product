@@ -11,5 +11,6 @@ import java.util.UUID;
 public interface ProductRepository extends JpaRepository<Product, UUID> {
 
     boolean existsByProductName(String productName);
+
     Page<Product> findAllByStatus(ProductStatus status, Pageable pageable);
 }

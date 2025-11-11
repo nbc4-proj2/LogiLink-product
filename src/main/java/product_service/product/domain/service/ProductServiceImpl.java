@@ -100,7 +100,8 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public Page<ProductRes> getProductPage(Pageable pageable){
 
-        return productRepository.findAllByStatus(ProductStatus.ACTIVE, pageable).map(ProductRes::from);
+        Page<Product> productPage = productRepository.findAllByStatus(ProductStatus.ACTIVE, pageable);
+        return productPage.map(ProductRes::from);
     }
 
     private void validateCreatePermission(String userRole, UUID hubId, UUID companyId) {

@@ -72,4 +72,11 @@ public class ProductController {
         return BaseResponse.success(result);
     }
 
+    // 상품 재고 감소(Order-service 호출 시)
+    @PutMapping("/{productId}/decrease-stock")
+    public BaseResponse<String> decreaseStock(@PathVariable UUID productId, @RequestParam Long amount) {
+        productService.decreaseStock(productId, amount);
+        return BaseResponse.success("재고 감소 완료");
+    }
+
 }
