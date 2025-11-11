@@ -26,9 +26,4 @@ public class ProductCreateReq {
     @Min(value = 0, message = "재고 수량은 0개 이상이어야 합니다.")
     private Long productQuantity;
 
-    @NotNull(message = "허브는 필수입니다.")
-    private UUID hubId;
-
-    @NotNull(message = "회사는 필수입니다.")
-    private UUID companyId;
 }

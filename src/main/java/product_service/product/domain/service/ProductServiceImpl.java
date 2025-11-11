@@ -25,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
     //=====상품 생성(MASTER, HUB, COMPANY)=====//
     @Override
     @Transactional
-    public ProductRes createProduct(ProductCreateReq requestDto, Long userId, String userRole){
+    public ProductRes createProduct(ProductCreateReq requestDto, Long userId, String userRole, UUID HubId, UUID CompanyId){
 
         // 상품 생성 권한 검증
         //validateCreatePermission(requestDto, userId, userRole);
@@ -40,8 +40,8 @@ public class ProductServiceImpl implements ProductService {
                 .productPrice(requestDto.getProductPrice())
                 .productQuantity(requestDto.getProductQuantity())
                 .status(ProductStatus.ACTIVE)
-                .hubId(requestDto.getHubId())
-                .companyId(requestDto.getCompanyId())
+                .hubId(HubId)
+                .companyId(CompanyId)
                 .createdBy(userId)
                 .build();
         return ProductRes.from(productRepository.save(product));
@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
     //====상품 수정(MASTER, HUB, COMPANY)=====//
     @Override
     @Transactional
-    public ProductRes updateProduct(UUID productId, ProductUpdateReq requestDto, Long userId, String userRole){
+    public ProductRes updateProduct(UUID productId, ProductUpdateReq requestDto, Long userId, String userRole, UUID HubId, UUID CompanyId){
 
         Product product = productRepository.findById(productId).orElseThrow(() -> new AppException(ProductErrorCode.PRODUCT_NOT_FOUND));
 
@@ -66,10 +66,7 @@ public class ProductServiceImpl implements ProductService {
                 requestDto.getProductName(),
                 requestDto.getProductDescription(),
                 requestDto.getProductPrice(),
-                requestDto.getProductQuantity(),
-                ProductStatus.ACTIVE,
-                requestDto.getHubId(),
-                requestDto.getCompanyId()
+                requestDto.getProductQuantity()
         );
         return ProductRes.from(productRepository.save(product));
     }
@@ -77,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
     //====상품 삭제(MASTER, HUB)=====//
     @Override
     @Transactional
-    public void deleteProduct(UUID productId, Long userId, String userRole){
+    public void deleteProduct(UUID productId, Long userId, String userRole, UUID HubId, UUID CompanyId){
 
         Product product = productRepository.findById(productId).orElseThrow(() -> new AppException(ProductErrorCode.PRODUCT_NOT_FOUND));
 

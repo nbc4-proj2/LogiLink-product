@@ -18,6 +18,8 @@ public class ProductRes {
     private Long productPrice;
     private Long productQuantity;
     private ProductStatus status;
+    private UUID hubId;
+    private UUID companyId;
     private LocalDateTime createdAt;
     private LocalDateTime updateAt;
 
@@ -29,6 +31,8 @@ public class ProductRes {
                 .productPrice(product.getProductPrice())
                 .productQuantity(product.getProductQuantity())
                 .status(product.getStatus())
+                .hubId(product.getHubId())
+                .companyId(product.getCompanyId())
                 .createdAt(product.getCreatedAt())
                 .updateAt(product.getUpdatedAt())
                 .build();

@@ -49,17 +49,11 @@ public class Product extends BaseTimeEntity {
             String productName,
             String productDescription,
             Long productPrice,
-            Long productQuantity,
-            ProductStatus status,
-            UUID hubId,
-            UUID companyId) {
+            Long productQuantity) {
         this.productName = productName;
         this.productDescription = productDescription;
         this.productPrice = productPrice;
         this.productQuantity = productQuantity;
-        this.status = status;
-        this.hubId = hubId;
-        this.companyId = companyId;
     }
 
     // 재고 증가
