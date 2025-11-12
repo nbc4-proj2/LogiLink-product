@@ -25,10 +25,10 @@ public class ProductController {
     @PostMapping
     public BaseResponse<ProductRes> createProduct(
             @RequestBody @Valid ProductCreateReq requestDto,
-            @RequestHeader(value = "X-User-Id", required = false, defaultValue = "1") Long userId,
-            @RequestHeader(value = "X-User-Role", required = false, defaultValue = "COMPANY_MANAGER") String userRole,
-            @RequestHeader(value = "X-Hub_Id", required = false) UUID hubId,
-            @RequestHeader(value = "X-Company-Id", required = false) UUID companyId){
+            @RequestHeader(value = "X-User-Id") Long userId,
+            @RequestHeader(value = "X-User-Role") String userRole,
+            @RequestHeader(value = "X-Hub_Id") UUID hubId,
+            @RequestHeader(value = "X-Company-Id") UUID companyId){
         ProductRes responseDto = productService.createProduct(requestDto, userId, userRole, hubId, companyId);
         return BaseResponse.success(responseDto);
     }
@@ -38,10 +38,10 @@ public class ProductController {
     public BaseResponse<ProductRes> updateProduct(
             @PathVariable UUID productId,
             @RequestBody @Valid ProductUpdateReq requestDto,
-            @RequestHeader(value="X-User-Id", required = false, defaultValue = "1" ) Long userId,
-            @RequestHeader(value="X-User-Role", required = false, defaultValue = "COMPANY_MANAGER") String userRole,
-            @RequestHeader(value = "X-Hub_Id", required = false) UUID hubId,
-            @RequestHeader(value = "X-Company-Id", required = false) UUID companyId){
+            @RequestHeader(value="X-User-Id") Long userId,
+            @RequestHeader(value="X-User-Role") String userRole,
+            @RequestHeader(value = "X-Hub_Id") UUID hubId,
+            @RequestHeader(value = "X-Company-Id") UUID companyId){
         ProductRes responseDto = productService.updateProduct(productId, requestDto, userId, userRole, hubId, companyId);
         return BaseResponse.success(responseDto);
     }
@@ -50,10 +50,10 @@ public class ProductController {
     @DeleteMapping("/{productId}")
     public BaseResponse<ProductRes> deleteProduct(
             @PathVariable UUID productId,
-            @RequestHeader(value="X-User-Id", required = false, defaultValue = "1") Long userId,
-            @RequestHeader(value="X-User-Role", required = false, defaultValue = "COMPANY_MANAGER") String userRole,
-            @RequestHeader(value = "X-Hub_Id", required = false) UUID hubId,
-            @RequestHeader(value = "X-Company-Id", required = false) UUID companyId){
+            @RequestHeader(value="X-User-Id") Long userId,
+            @RequestHeader(value="X-User-Role") String userRole,
+            @RequestHeader(value = "X-Hub_Id") UUID hubId,
+            @RequestHeader(value = "X-Company-Id") UUID companyId){
         productService.deleteProduct(productId, userId, userRole, hubId, companyId);
         return BaseResponse.success(null);
     }
