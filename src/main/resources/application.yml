@@ -20,6 +20,16 @@ spring:
       hibernate.use_sql_comments: true
       dialect: org.hibernate.dialect.PostgreSQLDialect
 
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:19090/eureka/
+  instance:
+    hostname: product-service
+
+
 server:
   port: ${SERVER_PORT:19094}
 
