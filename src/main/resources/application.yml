@@ -25,9 +25,13 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:19090/eureka/
+      defaultZone: http://host.docker.internal:19090/eureka/
   instance:
-    hostname: product-service
+    hostname: localhost
+    non-secure-port: 19094
+    prefer-ip-address: false
+    instance-id: ${spring.application.name}:${random.value}
+
 
 
 server:
