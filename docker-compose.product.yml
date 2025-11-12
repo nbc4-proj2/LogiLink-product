@@ -27,8 +27,12 @@ services:
       - .env
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      # 필요 시 개별 주입도 가능:
-      # POSTGRES_URL: jdbc:postgresql://product-postgres:${POSTGRES_PORT}/${POSTGRES_DB}
+
+      SPRING_DATASOURCE_URL: jdbc:postgresql://product-postgres:${POSTGRES_PORT}/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+
     depends_on:
       - product-postgres
     ports:

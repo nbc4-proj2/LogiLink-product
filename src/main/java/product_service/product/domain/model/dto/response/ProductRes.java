@@ -1,0 +1,41 @@
+package product_service.product.domain.model.dto.response;
+
+import lombok.Builder;
+import lombok.Getter;
+import product_service.product.domain.model.entity.Product;
+import product_service.product.domain.model.entity.ProductStatus;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Getter
+@Builder
+public class ProductRes {
+
+    private UUID productId;
+    private String productName;
+    private String productDescription;
+    private Long productPrice;
+    private Long productQuantity;
+    private ProductStatus status;
+    private UUID hubId;
+    private UUID companyId;
+    private LocalDateTime createdAt;
+    private LocalDateTime updateAt;
+
+    public static ProductRes from(Product product){
+        return ProductRes.builder()
+                .productId(product.getProductId())
+                .productName(product.getProductName())
+                .productDescription(product.getProductDescription())
+                .productPrice(product.getProductPrice())
+                .productQuantity(product.getProductQuantity())
+                .status(product.getStatus())
+                .hubId(product.getHubId())
+                .companyId(product.getCompanyId())
+                .createdAt(product.getCreatedAt())
+                .updateAt(product.getUpdatedAt())
+                .build();
+    }
+
+}
