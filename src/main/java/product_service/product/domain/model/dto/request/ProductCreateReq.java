@@ -26,4 +26,6 @@ public class ProductCreateReq {
     @Min(value = 0, message = "재고 수량은 0개 이상이어야 합니다.")
     private Long productQuantity;
 
+    private Long prdId;
+
 }

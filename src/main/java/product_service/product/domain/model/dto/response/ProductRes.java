@@ -22,6 +22,7 @@ public class ProductRes {
     private UUID companyId;
     private LocalDateTime createdAt;
     private LocalDateTime updateAt;
+    private Long prdId;
 
     public static ProductRes from(Product product){
         return ProductRes.builder()
@@ -35,6 +36,7 @@ public class ProductRes {
                 .companyId(product.getCompanyId())
                 .createdAt(product.getCreatedAt())
                 .updateAt(product.getUpdatedAt())
+                .prdId(product.getPrdId())
                 .build();
     }
 

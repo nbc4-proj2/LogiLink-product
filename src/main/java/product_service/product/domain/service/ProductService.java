@@ -18,6 +18,8 @@ public interface ProductService {
 
     ProductRes getProduct(UUID productId);
 
+    ProductRes getPrdId(Long prdId);
+
     Page<ProductRes> getProductPage(Pageable pageable);
 
     void decreaseStock(UUID productId, Long amount);

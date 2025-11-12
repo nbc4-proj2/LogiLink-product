@@ -44,6 +44,10 @@ public class Product extends BaseTimeEntity {
     @Column(columnDefinition = "uuid", nullable = false)
     private UUID companyId;
 
+    //임의값
+    @Column(nullable = false)
+    private Long prdId;
+
     // 상품 수정 생성자
     public void update(
             String productName,

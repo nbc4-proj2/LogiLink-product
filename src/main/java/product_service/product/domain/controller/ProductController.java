@@ -27,7 +27,7 @@ public class ProductController {
             @RequestBody @Valid ProductCreateReq requestDto,
             @RequestHeader(value = "X-User-Id") Long userId,
             @RequestHeader(value = "X-User-Role") String userRole,
-            @RequestHeader(value = "X-Hub_Id") UUID hubId,
+            @RequestHeader(value = "X-Hub-Id") UUID hubId,
             @RequestHeader(value = "X-Company-Id") UUID companyId){
         ProductRes responseDto = productService.createProduct(requestDto, userId, userRole, hubId, companyId);
         return BaseResponse.success(responseDto);
@@ -40,7 +40,7 @@ public class ProductController {
             @RequestBody @Valid ProductUpdateReq requestDto,
             @RequestHeader(value="X-User-Id") Long userId,
             @RequestHeader(value="X-User-Role") String userRole,
-            @RequestHeader(value = "X-Hub_Id") UUID hubId,
+            @RequestHeader(value = "X-Hub-Id") UUID hubId,
             @RequestHeader(value = "X-Company-Id") UUID companyId){
         ProductRes responseDto = productService.updateProduct(productId, requestDto, userId, userRole, hubId, companyId);
         return BaseResponse.success(responseDto);
@@ -52,7 +52,7 @@ public class ProductController {
             @PathVariable UUID productId,
             @RequestHeader(value="X-User-Id") Long userId,
             @RequestHeader(value="X-User-Role") String userRole,
-            @RequestHeader(value = "X-Hub_Id") UUID hubId,
+            @RequestHeader(value = "X-Hub-Id") UUID hubId,
             @RequestHeader(value = "X-Company-Id") UUID companyId){
         productService.deleteProduct(productId, userId, userRole, hubId, companyId);
         return BaseResponse.success(null);
@@ -63,6 +63,13 @@ public class ProductController {
     public BaseResponse<ProductRes> getProduct(@PathVariable UUID productId){
         return BaseResponse.success(productService.getProduct(productId));
     }
+
+    // 상품 임의 조회 - prdId
+    @GetMapping("/by-prd/{prdId}")
+    public BaseResponse<ProductRes> getPrdId(@PathVariable Long prdId){
+        return BaseResponse.success(productService.getPrdId(prdId));
+    }
+
 
     // 상품 목록 조회 - ALL
     @GetMapping

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import product_service.product.domain.model.entity.Product;
 import product_service.product.domain.model.entity.ProductStatus;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ProductRepository extends JpaRepository<Product, UUID> {
@@ -13,4 +14,6 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
     boolean existsByProductName(String productName);
 
     Page<Product> findAllByStatus(ProductStatus status, Pageable pageable);
+
+    Optional<Product> findByPrdId(Long prdId);
 }

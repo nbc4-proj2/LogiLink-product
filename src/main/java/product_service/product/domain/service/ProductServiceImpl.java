@@ -43,6 +43,7 @@ public class ProductServiceImpl implements ProductService {
                 .hubId(hubId)
                 .companyId(companyId)
                 .createdBy(userId)
+                .prdId(requestDto.getPrdId())
                 .build();
         return ProductRes.from(productRepository.save(product));
     }
@@ -91,6 +92,14 @@ public class ProductServiceImpl implements ProductService {
 
         Product product = productRepository.findById(productId).orElseThrow(() -> new AppException(ProductErrorCode.PRODUCT_NOT_FOUND));
 
+        return ProductRes.from(product);
+    }
+
+    // 상품 prdId값으로 조회
+    @Override
+    @Transactional
+    public ProductRes getPrdId(Long prdId){
+        Product product = productRepository.findByPrdId(prdId).orElseThrow(() -> new AppException(ProductErrorCode.PRODUCT_NOT_FOUND));
         return ProductRes.from(product);
     }
 
